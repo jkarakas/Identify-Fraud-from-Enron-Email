@@ -10,4 +10,5 @@ The dataset, before any transformations, contained __146 records__ consisting of
 The aim of this project is to create a model that, using the optimal combination of the available features, can identify  whether a person is a POI or not.    
 Since the dataset contains financial and email information that is common among most corporations it could potentially be used to help identify person of interests in similar situations in other companies.
 
-**[Project Report](report.html)**
+**[Project Report](https://jkarakas.github.io/Identify-Fraud-from-Enron-Email/report.html)**
+
