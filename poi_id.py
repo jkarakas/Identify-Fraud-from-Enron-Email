@@ -72,6 +72,31 @@ selector.fit(features, labels)
 scores = zip(features_list[1:], selector.scores_)
 scores_list = sorted(scores, key=lambda x: x[1], reverse=True)
 
+# Find the best number of features
+from sklearn.model_selection import GridSearchCV
+from sklearn.pipeline import Pipeline
+from sklearn import tree
+
+n_features = np.arange(1, len(features_list))
+
+# Create a pipeline with feature selection and classification
+pipe = Pipeline([
+    ('select_features', SelectKBest()),
+    ('classify', tree.DecisionTreeClassifier())
+])
+
+param_grid = [
+    {
+        'select_features__k': n_features
+    }
+]
+
+# Use GridSearchCV to automate the process of finding the optimal number of features
+tree_clf = GridSearchCV(pipe, param_grid=param_grid, scoring='f1', cv=5)
+tree_clf.fit(features, labels)
+
+tree_clf.best_params_
+
 # Task 4: Try a varity of classifiers
 # Please name your classifier clf for easy export below.
 # Note that if you want to do PCA or other multi-stage operations,
@@ -137,7 +162,7 @@ from sklearn.naive_bayes import GaussianNB
 clf1 = GaussianNB()
 df1 = cross_validate(clf1, 'GaussianNB')
 
-from sklearn import tree
+
 clf2 = tree.DecisionTreeClassifier()
 df2 = cross_validate(clf2, 'DecisionTreeClassifier')
 df = df1.append(df2)
@@ -182,6 +207,7 @@ tree_clf.fit(features, labels)
 # Get the best algorithm hyperparameters for the Decision Tree
 tree_clf.best_params_
 
+# A Dataframe to use in the reporting
 df_final = cross_validate(tree_clf.best_estimator_, 'Tuned DecisionTreeClassifier')
 
 # Tune the parameters for RandomForestClassifier
@@ -194,7 +220,7 @@ param_grid = {
     "min_samples_leaf": [1, 2, 4, 6]}
 
 # Use GridSearchCV to find the optimal hyperparameters for the classifier
-forest_clf = GridSearchCV(clf3, param_grid=param_grid, scoring='f1', cv=10)
+forest_clf = GridSearchCV(clf3, param_grid=param_grid, scoring='f1', cv=5)
 forest_clf.fit(features, labels)
 # Get the best algorithm hyperparameters for the Decision Tree
 forest_clf.best_params_
