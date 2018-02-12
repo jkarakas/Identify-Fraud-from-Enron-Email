@@ -1,4 +1,4 @@
-<html><head><meta charset="utf-8">
+<html class="gr__localhost"><head><meta charset="utf-8">
 <title>report</title><script src="https://unpkg.com/jupyter-js-widgets@2.0.*/dist/embed.js"></script><style type="text/css">/*!
  *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
@@ -3798,12 +3798,12 @@ all of MD as it is not optimized for dense, information rich UIs.
     font-size: var(--jp-widgets-font-size);
     vertical-align: top;
     padding-left: calc( var(--jp-widgets-input-padding) * 2);
-	appearance: none;
-	-webkit-appearance: none;
-	-moz-appearance: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
     background-repeat: no-repeat;
-	background-size: 20px;
-	background-position: right center;
+  background-size: 20px;
+  background-position: right center;
     background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjIuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxOCAxOCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTggMTg7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDpub25lO30KPC9zdHlsZT4KPHBhdGggZD0iTTUuMiw1LjlMOSw5LjdsMy44LTMuOGwxLjIsMS4ybC00LjksNWwtNC45LTVMNS4yLDUuOXoiLz4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTAtMC42aDE4djE4SDBWLTAuNnoiLz4KPC9zdmc+Cg");
 }
 
@@ -16170,7 +16170,14 @@ Since the dataset contains financial and email information that is common among 
 <div class="output_html rendered_html output_subarea ">
 
 
+<style>
+table, td {
+    tr:nth-child(odd) {
+    background-color: #ccc;
+}
+    
 
+</style>
 
 
 
@@ -16186,6 +16193,7 @@ Since the dataset contains financial and email information that is common among 
 <td>51</td>
   </tr>
 <tr><td>deferral_payments</td><td>107</td></tr><tr><td>total_payments</td><td>21</td></tr><tr><td>loan_advances</td><td>142</td></tr><tr><td>bonus</td><td>64</td></tr><tr><td>restricted_stock_deferred</td><td>128</td></tr><tr><td>deferred_income</td><td>97</td></tr><tr><td>total_stock_value</td><td>20</td></tr><tr><td>expenses</td><td>51</td></tr><tr><td>exercised_stock_options</td><td>44</td></tr><tr><td>other</td><td>53</td></tr><tr><td>long_term_incentive</td><td>80</td></tr><tr><td>restricted_stock</td><td>36</td></tr><tr><td>director_fees</td><td>129</td></tr><tr><td rowspan="6">Email</td><td>to_messages</td><td>60</td></tr><tr><td>email_address</td><td>60</td></tr><tr><td>from_poi_to_this_person</td><td>60</td></tr><tr><td>from_messages</td><td>60</td></tr><tr><td>from_this_person_to_poi</td><td>60</td></tr><tr><td>shared_receipt_with_poi</td><td>0</td></tr><tr><td>POI</td><td>poi</td><td>0</td></tr></tbody></table>
+
 
 
 </div>
@@ -16315,10 +16323,69 @@ I used the univariate feature selection, <code>SelectKBest</code>, which selects
 </tr>
 </tbody>
 </table>
-<p>I used the <code>select_features__k</code> from <code>SelectKBest</code> to algorithmically find the best number of features to use.</p>
+<p>I used the <code>select_features__k</code> from <code>SelectKBest</code> to algorithmically find the best number of features, using the <code>chi2</code> score together with the <code>DecisionTreeClassifier</code> and the <code>Pipeline</code> functions as follows:</p>
+<div class="highlight"><pre><span></span><span class="n">n_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">features_list</span><span class="p">))</span>
+
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">'select_features'</span><span class="p">,</span> <span class="n">SelectKBest</span><span class="p">(</span><span class="n">chi2</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s1">'classify'</span><span class="p">,</span> <span class="n">tree</span><span class="o">.</span><span class="n">DecisionTreeClassifier</span><span class="p">())</span>
+<span class="p">])</span>
+
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">'select_features__k'</span><span class="p">:</span> <span class="n">n_features</span><span class="p">}]</span>
+</pre></div>
+<p>Then, I used <code>GridSearchCV</code>to automate the process of finding the optimal number of features based on their F1 score as follows:</p>
+<div class="highlight"><pre><span></span><span class="n">tree_clf</span><span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">'f1'</span><span class="p">,</span> <span class="n">cv</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">tree_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">);</span>
+</pre></div>
 <p>The result was:</p>
 <div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">'select_features__k'</span><span class="p">:</span> <span class="mi">9</span><span class="p">}</span>
 </pre></div>
+<p>I used the same procedure with the <code>RandomForestClassifier</code> and had similar results and as a result I will use the following 9 features to train the algorithms:</p>
+<table>
+<thead><tr>
+<th style="text-align:left">Feature</th>
+<th style="text-align:right">Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">exercised_stock_options</td>
+<td style="text-align:right">6.845</td>
+</tr>
+<tr>
+<td style="text-align:left">loan_advances</td>
+<td style="text-align:right">6.688</td>
+</tr>
+<tr>
+<td style="text-align:left">total_stock_value</td>
+<td style="text-align:right">5.476</td>
+</tr>
+<tr>
+<td style="text-align:left">bonus</td>
+<td style="text-align:right">5.120</td>
+</tr>
+<tr>
+<td style="text-align:left">salary</td>
+<td style="text-align:right">3.052</td>
+</tr>
+<tr>
+<td style="text-align:left">total_payments</td>
+<td style="text-align:right">2.784</td>
+</tr>
+<tr>
+<td style="text-align:left">long_term_incentive</td>
+<td style="text-align:right">2.538</td>
+</tr>
+<tr>
+<td style="text-align:left">shared_receipt_with_poi</td>
+<td style="text-align:right">2.432</td>
+</tr>
+<tr>
+<td style="text-align:left">fraction_from_poi</td>
+<td style="text-align:right">1.785</td>
+</tr>
+</tbody>
+</table>
 
 </div>
 </div>

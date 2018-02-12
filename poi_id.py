@@ -79,9 +79,10 @@ from sklearn import tree
 
 n_features = np.arange(1, len(features_list))
 
+## DecisionTreeClassifier
 # Create a pipeline with feature selection and classification
 pipe = Pipeline([
-    ('select_features', SelectKBest()),
+    ('select_features', SelectKBest(chi2)),
     ('classify', tree.DecisionTreeClassifier())
 ])
 
@@ -96,6 +97,26 @@ tree_clf = GridSearchCV(pipe, param_grid=param_grid, scoring='f1', cv=5)
 tree_clf.fit(features, labels)
 
 tree_clf.best_params_
+
+##RandomForestClassifier
+# Create a pipeline with feature selection and classification
+pipe = Pipeline([
+    ('select_features', SelectKBest(chi2)),
+    ('classify', RandomForestClassifier(max_depth=None,
+                                        min_samples_split=2))
+])
+
+param_grid = [
+    {
+        'select_features__k': n_features
+    }
+]
+
+# Use GridSearchCV to automate the process of finding the optimal number of features
+forest_clf = GridSearchCV(pipe, param_grid=param_grid, scoring='f1', cv=5)
+forest_clf.fit(features, labels)
+
+forest_clf.best_params_
 
 # Task 4: Try a varity of classifiers
 # Please name your classifier clf for easy export below.
