@@ -2,9 +2,8 @@
 
 **Ioannis K Breier**
 
-![](https://cdn.technologyreview.com/i/images/enronx299.jpg?sw=480)  
-_**Corporate corpus**: Volumes of e-mails that were sent and received in Enron’s headquarters in Houston, seen here in 2002, are still parsed and dissected by computer scientists and other researchers. 
-Image Source: https://www.technologyreview.com/s/515801/the-immortal-life-of-the-enron-e-mails/_
+![](https://cdn.technologyreview.com/i/images/enronx299.jpg?sw=680)  
+_Image Source: https://www.technologyreview.com/s/515801/the-immortal-life-of-the-enron-e-mails/_
 
 <!---
 <figure>
