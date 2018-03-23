@@ -1,14 +1,18 @@
 # Identifying Fraud from Enron Emails
 
 **Ioannis K Breier**
-<!---
-![Corporate corpus: Volumes of e-mails that were sent and received in Enron’s headquarters in Houston, seen here in 2002, are still parsed and dissected by computer scientists and other researchers.](https://cdn.technologyreview.com/i/images/enronx299.jpg?sw=480)
--->
 
+![](https://cdn.technologyreview.com/i/images/enronx299.jpg?sw=480)
+_**Corporate corpus**: Volumes of e-mails that were sent and received in Enron’s headquarters in Houston, seen here in 2002, are still parsed and dissected by computer scientists and other researchers._
+
+<!---
 <figure>
     <img src="https://cdn.technologyreview.com/i/images/enronx299.jpg?sw=480" alt>
     <figcaption>Corporate corpus: Volumes of e-mails that were sent and received in Enron’s headquarters in Houston, seen here in 2002, are still parsed and dissected by computer scientists and other researchers. </figcaption>
 </figure>
+-->
+
+
 
 In 2000, Enron was one of the largest companies in the United States. By 2002, it had collapsed into bankruptcy due to widespread corporate fraud. In the resulting Federal investigation, a significant amount of typically confidential information entered into the public record, including tens of thousands of emails and detailed financial data for top executives.   
 
